@@ -1,3 +1,4 @@
+// Variant picker
 let variantButtons = document.querySelectorAll('.variant-btn');
 if(variantButtons) {
   variantButtons.forEach((item) =>{
@@ -13,6 +14,7 @@ if(variantButtons) {
 
 }
 
+// Add to cart
 let addButtons = document.querySelectorAll('.add-to-cart-btn');
 if ( addButtons) {
   addButtons.forEach((item) => {
