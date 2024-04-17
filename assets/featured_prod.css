@@ -1,0 +1,143 @@
+.swiper {
+    display: none;
+}
+.variant-buttons {
+    display: flex;
+    gap: 10px;
+}
+.variant-btn {
+    margin-top: 10px;
+    padding: 10px;
+    width: 70px;
+    border: 1px solid black;
+    background: none;
+    border-radius: 5px;
+    color: #333;
+    cursor: pointer;
+}
+
+.variant-btn.active {
+    background-color: #007bff;
+    color: #fff;
+}
+.featured_heading {
+    margin: 0 auto;
+    text-align: center;
+}
+.featured_heading h1 {
+    margin: 0;
+}
+.products-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    padding-top: 20px;
+    max-width: 1200px;
+}
+
+.product-card {
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 20px;
+    max-width: 550px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.product-card h3 {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.product-card span {
+    font-size: 16px;
+    color: black;
+}
+
+.add-to-cart-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #0056b3;
+}
+
+.two-per-row.product-card {
+    flex-basis: calc(50% - 20px);
+}
+
+.three-per-row.product-card {
+    flex-basis: calc(33.333% - 20px);
+}
+
+.four-per-row.product-card {
+    flex-basis: calc(25% - 20px);
+}
+@media screen and (max-width: 768px) {
+    .test_featured_products {
+        padding: 10px;
+    }
+    .variant-btn {
+        margin-top: 10px;
+        padding: 5px;
+        width: 50px;
+    }
+    .swiper {
+        display: block;
+        padding-top: 20px;
+    }
+    .products-container {
+        display: none;
+    }
+    .swiper-slide {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .swiper-slide img {
+        width: 100%;
+        height: auto;
+        border-radius: 5px;
+    }
+
+    .swiper-slide h3 {
+        font-size: 16px;
+        margin: 10px 0;
+    }
+
+    .swiper-slide span {
+        font-size: 14px;
+        color: black;
+    }
+
+    .swiper-slide .add-to-cart-btn {
+        display: block;
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin: 0 auto;
+        margin-top: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+}

@@ -1,0 +1,235 @@
+{{ 'swiper-bundle.min.css' | asset_url | stylesheet_tag }}
+<section>
+        <div class="featured_heading">
+            <h1>{{ section.settings.title }}</h1>
+        </div>
+        <div class="products-container">
+            {% for block in section.blocks %}
+                <div class="{{ section.settings.products_per_row }}-per-row  product-card  swiper-slide">
+                    <a href=" {{ block.settings.product.url }}">
+                        <img
+                                src="
+                    {% if block.settings.image != blank %}
+                        {{ block.settings.image | img_url: 'master' }}
+                    {% else %}
+                        {{ block.settings.product.featured_image | img_url: 'master' }}
+                    {% endif %}
+                    "
+                                alt="{{ block.settings.product.title }}">
+                    </a>
+                    <h3>{{ block.settings.product.title }}</h3>
+
+                    {% if block.settings.product.variants.size > 1 %}
+                        {% assign prices = block.settings.product.variants | map: 'price' | sort %}
+                        {% assign min_price = prices.first %}
+                        {% assign max_price = prices.last %}
+
+                        {% if min_price != max_price %}
+                            <span>Price: {{ min_price | money }} - {{ max_price | money }}</span>
+                        {% else %}
+                            <span>Price: {{ min_price | money }}</span>
+                        {% endif %}
+                    {% if section.settings.quick_add == true %}
+                        <div class="variant-buttons">
+                            {% for variant in block.settings.product.variants %}
+                                <button class="variant-btn{% if variant.id == block.settings.product.selected_or_first_available_variant.id %} active{% endif %}" data-variant-id="{{ variant.id }}">{{ variant.title }}</button>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    {% else %}
+                        <span {% if section.settings.quick_add == true %}style="margin-bottom: 52.5px;" {% endif %} class="price">Price: {{ block.settings.product.selected_or_first_available_variant.price | money }}</span>
+                    {% endif %}
+
+
+                    {% if section.settings.quick_add == true %}
+                        <button data-custom-tag="true" data-variant-id="{{ block.settings.product.selected_or_first_available_variant.id }}" class="add-to-cart-btn">Add to cart</button>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    <div class="swiper">
+        <div class="swiper-wrapper">
+            {% for block in section.blocks %}
+                <div class="swiper-slide">
+                    <a href=" {{ block.settings.product.url }}">
+                        <img
+                                src="
+                    {% if block.settings.image != blank %}
+                        {{ block.settings.image | img_url: 'master' }}
+                    {% else %}
+                        {{ block.settings.product.featured_image | img_url: 'master' }}
+                    {% endif %}
+                    "
+                                alt="{{ block.settings.product.title }}">
+                    </a>
+                    <h3>{{ block.settings.product.title }}</h3>
+
+                    {% if block.settings.product.variants.size > 1 %}
+                        {% assign prices = block.settings.product.variants | map: 'price' | sort %}
+                        {% assign min_price = prices.first %}
+                        {% assign max_price = prices.last %}
+
+                        {% if min_price != max_price %}
+                            <span>Price: {{ min_price | money }} - {{ max_price | money }}</span>
+                        {% else %}
+                            <span>Price: {{ min_price | money }}</span>
+                        {% endif %}
+
+                        {% if section.settings.quick_add == true %}
+                            <div class="variant-buttons">
+                                {% for variant in block.settings.product.variants %}
+                                    <button class="variant-btn{% if variant.id == block.settings.product.selected_or_first_available_variant.id %} active{% endif %}" data-variant-id="{{ variant.id }}">{{ variant.title }}</button>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <span {% if section.settings.quick_add == true %}style="margin-bottom: 42px;" {% endif %} class="price">Price: {{ block.settings.product.selected_or_first_available_variant.price | money }}</span>
+                    {% endif %}
+
+
+                    {% if section.settings.quick_add == true %}
+                        <button data-custom-tag="true" data-variant-id="{{ block.settings.product.selected_or_first_available_variant.id }}" class="add-to-cart-btn">Add to cart</button>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<script src="{{ 'swiper-bundle.min.js' | asset_url }}"></script>
+<script src="{{ 'test-featured-product.js' | asset_url }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.innerWidth <= 768) {
+            let count = '{{ section.settings.products_mobile }}';
+            const mySwiper = new Swiper('.swiper', {
+                slidesPerView: count,
+                spaceBetween: 5,
+                loop: true
+            });
+        }
+    });
+</script>
+<style>
+    .test_featured_products {
+        margin-bottom: {{ section.settings.margin_bottom }}px;
+        margin-top: {{ section.settings.margin_top }}px;
+    }
+</style>
+{{ 'featured_prod.css' | asset_url | stylesheet_tag }}
+{% schema %}
+{
+  "name": "Test Featured Product",
+  "tag": "section",
+  "class": "test_featured_products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "default": "Featured Product",
+      "label": "Title"
+    },
+    {
+      "type": "header",
+      "content": "Section Margin"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top Margin",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom Margin",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Desktop Product Per Row"
+    },
+    {
+      "type": "select",
+      "id": "products_per_row",
+      "default": "four",
+      "label": "Number of product",
+      "options": [
+        {
+          "value": "two",
+          "label": "Two"
+        },
+        {
+          "value": "three",
+          "label": "Three"
+        },
+        {
+          "value": "four",
+          "label": "Four"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Mobile Product To Show"
+    },
+    {
+      "type": "select",
+      "id": "products_mobile",
+      "default": "2",
+      "label": "Number of product on mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "One"
+        },
+        {
+          "value": "2",
+          "label": "Two"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Dynamic Checkout"
+    },
+    {
+      "type": "checkbox",
+      "id": "quick_add",
+      "label": "Quick Add Button",
+      "default": false
+    }
+  ],
+  "max_blocks": 8,
+  "blocks": [
+    {
+      "name": "Products",
+      "type": "product",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Default Image"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Choose Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Test Featured Products"
+    }
+  ]
+}
+{% endschema %}
